@@ -1,0 +1,8 @@
+{
+  "name" : "Autofill Pref API Test Extension",
+  "version" : "0.1",
+  "manifest_version": 2,
+  "description" : "Autofill Pref API Test Extension",
+  "permissions": [ "privacy" ],
+  "options_page": "options.html"
+}
