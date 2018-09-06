@@ -1,17 +1,20 @@
-var updateToggle = function(id, status) {
-  document.getElementById(id).innerText = status ?
-    'Off' : 'On';
+var updateToggle = function(id_prefix, message, details) {
+  console.log(message, details);
+  document.getElementById(id_prefix + '-status').innerText = message + ' ' +
+    (details.value ? 'on' : 'off');
+  document.getElementById(id_prefix + '-toggle').innerText = 'Toggle ' +
+    (details.value ? 'off' : 'on');
 }
 
 window.onload = function() {
   chrome.privacy.services.autofillEnabled.get({}, function(details) {
-    updateToggle('autofill-toggle', details.value)
+    updateToggle('autofill', 'Autofill is ', details)
   });
   chrome.privacy.services.autofillCreditCardEnabled.get({}, function(details) {
-    updateToggle('cc-autofill-toggle', details.value)
+    updateToggle('cc-autofill', 'Credit Card Autofill is ', details)
   });
   chrome.privacy.services.autofillAddressEnabled.get({}, function(details) {
-    updateToggle('address-autofill-toggle', details.value)
+    updateToggle('address-autofill', 'Address Autofill is ', details)
   });
 };
 
@@ -50,18 +53,15 @@ document.getElementById('address-autofill-toggle').addEventListener('click', fun
 
 chrome.privacy.services.autofillEnabled.onChange.addListener(
   function(details) {
-    updateToggle('autofill-toggle', details.value);
-    console.log('Autofill is now ', details.value ? 'On' : 'Off');
+    updateToggle('autofill', 'Autofill is ', details)
   });
 
 chrome.privacy.services.autofillCreditCardEnabled.onChange.addListener(
   function(details) {
-    updateToggle('cc-autofill-toggle', details.value);
-    console.log('Autofill Credit Card is now ', details.value ? 'On' : 'Off');
+    updateToggle('cc-autofill', 'Credit Card Autofill is ', details)
   });
 
 chrome.privacy.services.autofillAddressEnabled.onChange.addListener(
   function(details) {
-    updateToggle('address-autofill-toggle', details.value);
-    console.log('Autofill Address is now ', details.value ? 'On' : 'Off');
+    updateToggle('address-autofill', 'Address Autofill is ', details)
   });
